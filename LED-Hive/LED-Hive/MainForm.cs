@@ -3,6 +3,7 @@ using System;
 using System.Threading;
 using System.Windows.Forms;
 using Keyboard = Corale.Colore.Razer.Keyboard;
+using Timer = System.Windows.Forms.Timer;
 
 namespace LED_Hive
 {
@@ -28,7 +29,6 @@ namespace LED_Hive
         private void MainForm_Load(object sender, EventArgs e)
         {
             _events = Hook.GlobalEvents();
-
             _events.MouseDown += OnMouseDown;
             _events.MouseUp += OnMouseUp;
             _events.KeyDown += OnKeyDown;
@@ -39,6 +39,11 @@ namespace LED_Hive
 
             var thread = new Thread(UpdateThread);
             thread.Start();
+
+            var objKeyboardWaveTimer = new Timer { Interval = 70 };
+            objKeyboardWaveTimer.Tick += KeyboardWaveTimer_Tick;
+            objKeyboardWaveTimer.Start();
+
         }
 
         private void Main_FormClosed(object sender, FormClosedEventArgs e)
@@ -623,6 +628,11 @@ namespace LED_Hive
                 throw;
             }
 
+        }
+
+        private void KeyboardWaveTimer_Tick(object sender, EventArgs e)
+        {
+            Main.KeyboardWaveEffect();
         }
 
     }

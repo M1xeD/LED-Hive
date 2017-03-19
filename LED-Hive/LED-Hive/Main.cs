@@ -58,9 +58,6 @@ namespace LED_Hive
         //custom grid for the keyboard
         private static KeyboardCustom _customKeyboard = KeyboardCustom.Create();
 
-        //counter for KeyboardWaveEffect()
-        private static int _intWaveCounter;
-
         //Key indicator for KeyboardWaveEffect()
         private static int _intWaveKey;
 
@@ -76,7 +73,6 @@ namespace LED_Hive
         public static void Update()
         {
             UpdateCursorPosition();
-            KeyboardWaveEffect();
             KeyboardReactiveEffect();
             MouseAndMousepadReactive();
         }
@@ -295,11 +291,8 @@ namespace LED_Hive
 
 
             if (intFadeLevel == 1) return objFadeColor1;
-            else if (intFadeLevel == 2) return objFadeColor2;
-            if (intFadeLevel == 3)
-            {
-                return objFadeColor3;
-            }
+            if (intFadeLevel == 2) return objFadeColor2;
+            if (intFadeLevel == 3) return objFadeColor3;
 
             return ColoreColor.Black;
         }
@@ -324,8 +317,6 @@ namespace LED_Hive
             {
                 var color = new ColoreColor((byte)_flMouseAnimationRed, (byte)_flMouseAnimationGreen, (byte)_flMouseAnimationBlue);
 
-                SetAllOnMousepad(color);
-                SetAllOnMouse(color);
 
                 if (Color.Default.MousePrimaryRed > Color.Default.MouseTertiaryRed)
                 {
@@ -365,6 +356,9 @@ namespace LED_Hive
 
                     if (_flMouseAnimationBlue <= Color.Default.MousePrimaryBlue) _flMouseAnimationBlue = Color.Default.MousePrimaryBlue;
                 }
+
+                SetAllOnMousepad(color);
+                SetAllOnMouse(color);
             }
 
             //setting values after mousebutton release animations are done
@@ -444,184 +438,178 @@ namespace LED_Hive
             }
         }
 
-        private static void KeyboardWaveEffect()
+        public static void KeyboardWaveEffect()
         {
-            _intWaveCounter += 1;
-
-            if (_intWaveCounter % 45 == 0)
+            _intWaveKey += 1;
+            if (_intWaveKey <= 16)
             {
-                _intWaveKey += 1;
-                if (_intWaveKey <= 16)
+                switch (_intWaveKey)
                 {
-                    switch (_intWaveKey)
-                    {
-                        case 1:
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.S] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.A] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.CapsLock] = _keyboardSecondaryColor;
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemBackslash] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemApostrophe] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemSemicolon] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.L] = _keyboardPrimaryColor;
-                            break;
-                        case 2:
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.F] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.S] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.A] = _keyboardSecondaryColor;
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.CapsLock] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemBackslash] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemApostrophe] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemSemicolon] = _keyboardPrimaryColor;
-                            break;
-                        case 3:
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.T] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.F] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.S] = _keyboardSecondaryColor;
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.A] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.CapsLock] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemBackslash] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemApostrophe] = _keyboardPrimaryColor;
-                            break;
-                        case 4:
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D6] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.T] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.F] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D] = _keyboardSecondaryColor;
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.S] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.A] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.CapsLock] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemBackslash] = _keyboardPrimaryColor;
-                            break;
-                        case 5:
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.Z] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D6] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.T] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.F] = _keyboardSecondaryColor;
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.S] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.A] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.CapsLock] = _keyboardPrimaryColor;
-                            break;
-                        case 6:
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.H] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.Z] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D6] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.T] = _keyboardSecondaryColor;
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.F] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.S] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.A] = _keyboardPrimaryColor;
-                            break;
-                        case 7:
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.N] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.H] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.Z] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D6] = _keyboardSecondaryColor;
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.T] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.F] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.S] = _keyboardPrimaryColor;
-                            break;
-                        case 8:
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.J] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.N] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.H] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.Z] = _keyboardSecondaryColor;
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D6] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.T] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.F] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D] = _keyboardPrimaryColor;
-                            break;
-                        case 9:
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.K] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.J] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.N] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.H] = _keyboardSecondaryColor;
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.Z] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D6] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.T] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.F] = _keyboardPrimaryColor;
-                            break;
-                        case 10:
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.L] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.K] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.J] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.N] = _keyboardSecondaryColor;
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.H] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.Z] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D6] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.T] = _keyboardPrimaryColor;
-                            break;
-                        case 11:
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemSemicolon] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.L] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.K] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.J] = _keyboardSecondaryColor;
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.N] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.H] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.Z] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D6] = _keyboardPrimaryColor;
-                            break;
-                        case 12:
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemApostrophe] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemSemicolon] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.L] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.K] = _keyboardSecondaryColor;
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.J] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.N] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.H] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.Z] = _keyboardPrimaryColor;
-                            break;
-                        case 13:
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemBackslash] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemApostrophe] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemSemicolon] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.L] = _keyboardSecondaryColor;
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.K] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.J] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.N] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.H] = _keyboardPrimaryColor;
-                            break;
-                        case 14:
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.CapsLock] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemBackslash] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemApostrophe] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemSemicolon] = _keyboardSecondaryColor;
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.L] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.K] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.J] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.N] = _keyboardPrimaryColor;
-                            break;
-                        case 15:
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.A] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.CapsLock] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemBackslash] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemApostrophe] = _keyboardSecondaryColor;
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemSemicolon] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.L] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.K] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.J] = _keyboardPrimaryColor;
-                            break;
-                        case 16:
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.S] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.A] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.CapsLock] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemBackslash] = _keyboardSecondaryColor;
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemApostrophe] = CalculateKeyboardWaveColors(1);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemSemicolon] = CalculateKeyboardWaveColors(2);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.L] = CalculateKeyboardWaveColors(3);
-                            _customKeyboard[Corale.Colore.Razer.Keyboard.Key.K] = _keyboardPrimaryColor;
-                            break;
-                    }
+                    case 1:
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.S] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.A] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.CapsLock] = _keyboardSecondaryColor;
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemBackslash] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemApostrophe] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemSemicolon] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.L] = _keyboardPrimaryColor;
+                        break;
+                    case 2:
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.F] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.S] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.A] = _keyboardSecondaryColor;
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.CapsLock] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemBackslash] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemApostrophe] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemSemicolon] = _keyboardPrimaryColor;
+                        break;
+                    case 3:
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.T] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.F] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.S] = _keyboardSecondaryColor;
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.A] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.CapsLock] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemBackslash] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemApostrophe] = _keyboardPrimaryColor;
+                        break;
+                    case 4:
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D6] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.T] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.F] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D] = _keyboardSecondaryColor;
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.S] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.A] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.CapsLock] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemBackslash] = _keyboardPrimaryColor;
+                        break;
+                    case 5:
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.Z] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D6] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.T] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.F] = _keyboardSecondaryColor;
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.S] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.A] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.CapsLock] = _keyboardPrimaryColor;
+                        break;
+                    case 6:
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.H] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.Z] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D6] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.T] = _keyboardSecondaryColor;
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.F] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.S] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.A] = _keyboardPrimaryColor;
+                        break;
+                    case 7:
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.N] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.H] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.Z] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D6] = _keyboardSecondaryColor;
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.T] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.F] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.S] = _keyboardPrimaryColor;
+                        break;
+                    case 8:
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.J] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.N] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.H] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.Z] = _keyboardSecondaryColor;
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D6] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.T] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.F] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D] = _keyboardPrimaryColor;
+                        break;
+                    case 9:
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.K] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.J] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.N] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.H] = _keyboardSecondaryColor;
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.Z] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D6] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.T] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.F] = _keyboardPrimaryColor;
+                        break;
+                    case 10:
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.L] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.K] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.J] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.N] = _keyboardSecondaryColor;
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.H] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.Z] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D6] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.T] = _keyboardPrimaryColor;
+                        break;
+                    case 11:
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemSemicolon] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.L] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.K] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.J] = _keyboardSecondaryColor;
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.N] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.H] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.Z] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.D6] = _keyboardPrimaryColor;
+                        break;
+                    case 12:
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemApostrophe] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemSemicolon] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.L] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.K] = _keyboardSecondaryColor;
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.J] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.N] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.H] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.Z] = _keyboardPrimaryColor;
+                        break;
+                    case 13:
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemBackslash] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemApostrophe] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemSemicolon] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.L] = _keyboardSecondaryColor;
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.K] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.J] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.N] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.H] = _keyboardPrimaryColor;
+                        break;
+                    case 14:
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.CapsLock] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemBackslash] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemApostrophe] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemSemicolon] = _keyboardSecondaryColor;
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.L] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.K] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.J] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.N] = _keyboardPrimaryColor;
+                        break;
+                    case 15:
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.A] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.CapsLock] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemBackslash] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemApostrophe] = _keyboardSecondaryColor;
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemSemicolon] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.L] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.K] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.J] = _keyboardPrimaryColor;
+                        break;
+                    case 16:
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.S] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.A] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.CapsLock] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemBackslash] = _keyboardSecondaryColor;
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemApostrophe] = CalculateKeyboardWaveColors(1);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.OemSemicolon] = CalculateKeyboardWaveColors(2);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.L] = CalculateKeyboardWaveColors(3);
+                        _customKeyboard[Corale.Colore.Razer.Keyboard.Key.K] = _keyboardPrimaryColor;
+                        break;
                 }
-                else
-                {
-                    _intWaveKey = 0;
-                    _intWaveCounter = 0;
-                }
+            }
+            else
+            {
+                _intWaveKey = 0;
             }
         }
 
