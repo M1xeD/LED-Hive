@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<application>
+    <title>ControLED</title>
+    <description>Application to control Effects on Mouse, Mousepad and Keyboard which are not included in Synapse</description>
+    <author name="M1xeD!" contact=""/>
+    <device_supported keyboard="1" mouse="1" headset="0" mousepad="1" keypad="0"/>
+	<category game="0"/>
+</application>
