@@ -81,10 +81,11 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Color.Designer.cs</LastGenOutput>
     </None>
-    <None Include="LICENSE">
+    <None Include="please read\LICENSE">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="please read\README.md" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
