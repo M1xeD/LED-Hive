@@ -19,11 +19,13 @@ namespace LED_Hive
         public static bool IsKeyboardKeyPressed;
         public static Keyboard.Key KeyboardKeyPressed;
         public static Keyboard.Key KeyboardKeyReleased;
+        private static readonly Timer KeyboardWaveTimer = new Timer { Interval = 70 };
 
 
         public MainForm()
         {
             InitializeComponent();
+            Corale.Colore.Core.Chroma.Instance.Initialize();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -40,9 +42,8 @@ namespace LED_Hive
             var thread = new Thread(UpdateThread);
             thread.Start();
 
-            var objKeyboardWaveTimer = new Timer { Interval = 70 };
-            objKeyboardWaveTimer.Tick += KeyboardWaveTimer_Tick;
-            objKeyboardWaveTimer.Start();
+            KeyboardWaveTimer.Tick += KeyboardWaveTimer_Tick;
+            KeyboardWaveTimer.Start();
 
         }
 
@@ -52,6 +53,8 @@ namespace LED_Hive
             _events.MouseUp -= OnMouseUp;
             _events.KeyDown -= OnKeyDown;
             _events.KeyUp -= OnKeyUp;
+            KeyboardWaveTimer.Stop();
+            KeyboardWaveTimer.Tick -= KeyboardWaveTimer_Tick;
             _stayAwake = false;
         }
 
@@ -618,7 +621,7 @@ namespace LED_Hive
                 while (_stayAwake)
                 {
                     Main.Update();
-                    Thread.Sleep(1);
+                    Thread.Sleep(10);
                 }
                 Main.Quit();
             }
